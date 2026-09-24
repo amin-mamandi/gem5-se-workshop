@@ -30,7 +30,7 @@ riscv64-linux-gnu-gcc -O2 -std=c11 -Wall -Wextra -fno-tree-vectorize -static -no
 
 mkdir -p "$out"
 echo "Running $src -> $out"
-./build/RISCV/gem5.opt --outdir="$out" configs/workshop.py --binary "${src%.c}-gem5" "$@" \
+./gem5/build/RISCV/gem5.fast --outdir="$out" configs/workshop.py --binary "${src%.c}-gem5" "$@" \
     2>&1 | tee "$out/run.log"
 
 grep -E "^(simSeconds|simInsts) " "$out/stats.txt"

@@ -10,7 +10,6 @@ sudo apt install -y  build-essential scons python3-dev git pre-commit zlib1g zli
 
 
 cd "$(dirname "$0")"
-workshop_dir=$PWD
 
 # Build the examples after installing the RISC-V compiler.
 make gem5
@@ -20,4 +19,4 @@ if [[ ! -d gem5 ]]; then
 fi
 
 cd gem5
-scons "$workshop_dir/build/RISCV/gem5.opt" -j "${JOBS:-4}"
+scons build/RISCV/gem5.fast -j "${JOBS:-4}"

@@ -45,7 +45,7 @@ Expected output: **10 + 20 = 30**
 
 Result: `results/baseline/simple/stats.txt`
 
-<!-- Uses ./build/RISCV/gem5.opt. Run build-gem5.sh once first. The run script compiles examples/simple/main.c, runs it in SE, and saves run.log plus config.ini and stats.txt. -->
+<!-- Uses ./gem5/build/RISCV/gem5.fast. Run build-gem5.sh once first. The run script compiles examples/simple/main.c, runs it in SE, and saves run.log plus config.ini and stats.txt. -->
 
 ---
 
