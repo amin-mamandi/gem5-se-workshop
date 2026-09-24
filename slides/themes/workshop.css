@@ -1,0 +1,52 @@
+/* @theme workshop */
+/* Marp theme using the Bootcamp's spacious 16:9 teaching rhythm. */
+@import 'default';
+section {
+  width: 1280px; height: 720px;
+  padding: 64px 86px 55px;
+  background: #f9fbfc;
+  color: #152a3b;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 32px;
+  line-height: 1.22;
+}
+section h2 { font-size: 52px; letter-spacing: -1px; color: #122d40;
+  margin: 0 0 35px; }
+section h2::before { content: ''; position: absolute; top: 69px; left: 0;
+  border-left: 14px solid #008eae; height: 49px; }
+section h3 { font-size: 32px; color: #007c98; margin: 0 0 12px; }
+section strong { color: #007c98; }
+section img { display: block; max-height: 460px; max-width: 100%; margin: 12px auto; }
+section p { margin: 14px 0; }
+section blockquote { border-left: 7px solid #008eae; padding: 6px 22px;
+  margin: 22px 0; font-size: 32px; color: #233d50; }
+section code { background: #e8f2f5; color: #103247; }
+section pre { font-size: 27px; line-height: 1.17;
+  border-left: 7px solid #008eae; padding: 18px 23px; background: #eaf3f6; }
+section pre code { background: transparent; }
+section ul { margin-top: 10px; }
+section li { margin-bottom: 13px; }
+section::after { color: #899ca8; font-size: 17px; bottom: 20px; }
+section.title { background: #0b4053; color: white; display: flex;
+  flex-direction: column; justify-content: center; }
+section.title h2 { color: white; font-size: 57px; margin-bottom: 16px; }
+section.title img { max-height: 280px; max-width: 840px; }
+section.title p { font-size: 27px; margin: 7px 0; }
+section.title h2::before { border-color: #46c8d9; }
+section.title strong { color: #7adddf; }
+section.center-image img { margin-top: 25px; }
+section.small-code pre { font-size: 23px; }
+section.two-col { columns: 2; column-gap: 40px; }
+section.two-col h2 { column-span: all; }
+section.two-col h3 { break-before: column; }
+/* Official gem5 marks appear only from the simulation section onward.
+   Their placement is shared here so individual slides stay easy to edit. */
+section img.gem5-brand {
+  position: absolute; top: 24px; right: 30px;
+  width: 68px; height: 68px; max-width: none; max-height: none;
+  box-sizing: border-box; padding: 8px; margin: 0;
+  object-fit: contain; background: #fff; border-radius: 9px;
+}
+section img.gem5-brand.gem5-brand-feature {
+  width: 126px; height: 137px; padding: 12px;
+}

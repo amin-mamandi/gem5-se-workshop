@@ -1,0 +1,4 @@
+Host demonstration, not gem5. Linux-6.18.44-x86_64-with-glibc2.39
+Architecture: x86_64
+Seven runs per case; median process wall time, includes launch.
+Compiler flags: see Makefile. These values depend on this host.

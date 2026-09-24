@@ -1,0 +1,15 @@
+node_modules/
+.build/
+dist/
+examples/*/main
+examples/*/main-gem5
+examples/simple/cpu_walkthrough
+examples/simple/cpu_walkthrough-gem5
+results/
+experiments/*/results/
+__pycache__/
+/gem5/
+/build/
+/.toolchain/
+/.venv/
+*.tar.gz
