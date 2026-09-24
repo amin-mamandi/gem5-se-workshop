@@ -93,22 +93,19 @@ grep -irn "dram.readBursts" results/ --include=stats.txt
 grep -irn "readRowHitRate" results/dram-patterns/ --include=stats.txt
 ```
 
-## 8. Optional: CSVs and plots
+## 8. Optional: plots
 
 ```bash
-# Run one experiment suite
-python3 scripts/run_suite.py cache-size
-
 # Set up plotting environment
 python3 -m venv .venv
 . .venv/bin/activate
 python3 -m pip install matplotlib
 
-# Plot the results
+# Plot one experiment
 python3 scripts/plot_results.py cache-size
 ```
 
-Other suites: `baseline`, `cache-latency`, `sequential-vs-random`, `matmul`, `dram-patterns`.
+Run `./sweep-se.sh` first. Other experiments: `cache-latency`, `sequential-vs-random`, `matmul`, `dram-patterns`.
 
 ## 9. Optional: run on your own machine
 

@@ -1,10 +1,10 @@
 # gem5 SE experiments
 
-Local build: **`./build/RISCV/gem5.opt`**, RISC-V, classic cache hierarchy,
+Local build: **`./gem5/build/RISCV/gem5.opt`**, RISC-V, classic cache hierarchy,
 TimingSimpleCPU, SimpleBoard, DDR3_1600_8x8 single channel, 2 GHz.
 The config is `configs/workshop.py`; it uses `BinaryResource` and
 `set_se_binary_workload`. `./build-gem5.sh` clones the latest upstream source on first
-use. The tested revision is in [gem5-revision.txt](../gem5-revision.txt).
+use.
 Build native C programs with `make`; `make gem5` builds static RISC-V SE binaries.
 The default cross compiler is `riscv64-linux-gnu-gcc`;
 override it with `GEM5_CC` if needed. Confirm the ISA with
@@ -44,11 +44,8 @@ and `readRowHitRate` before interpreting a bar chart as a row locality effect.
 With caches bypassed, these DRAM counters include instruction fetches, stack
 accesses, and initialization as well as the array loads.
 
-The optional Python `run_suite.py` saves a command and gem5 `stats.txt` per case and a concise
-`summary.csv`. `plot_results.py` refuses to draw plots without real results.
-If another build renames statistics, inspect raw `stats.txt` and adjust the
-suffix selectors in `run_suite.py`. Empty optional stat columns mean the
-statistic was unavailable; the script never substitutes a number.
+`scripts/plot_results.py <experiment>` plots the `stats.txt` files that
+`sweep-se.sh` saves under `results/<experiment>/`.
 
 All runs finish the program and include initialization and libc. There is no
 warmup/reset region. Cache prefetching remains at the upstream hierarchy's defaults;

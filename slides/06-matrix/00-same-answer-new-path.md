@@ -50,7 +50,7 @@ for (i ...)             for (i ...)
 
 **Same checksum; host timing only.**
 
-<!-- Show the CSV and reproduction command in scripts/measure_host_demo.py. The host measurement motivates the model experiment; it cannot by itself prove a cache or DRAM cause. -->
+<!-- Show the CSV and reproduction command in scripts/host_demo.py. The host measurement motivates the model experiment; it cannot by itself prove a cache or DRAM cause. -->
 
 ---
 

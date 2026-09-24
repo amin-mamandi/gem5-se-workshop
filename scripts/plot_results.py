@@ -1,59 +1,67 @@
 #!/usr/bin/env python3
-"""Only plot measured summary.csv from run_suite.py; never synthesize data."""
-import csv
+"""Plot one experiment from results/<experiment>/*/stats.txt (made by sweep-se.sh)."""
 from pathlib import Path
+import re
 import sys
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
-NAMES = ['cache-latency', 'cache-size', 'sequential-vs-random',
-         'matmul', 'dram-patterns']
-LABELS = {
-    'cache-latency': ('L1 data latency (cycles)', 'l1d_latency'),
-    'cache-size': ('L1 data size', 'l1d_size'),
-    'sequential-vs-random': ('Access order', 'program'),
-    'matmul': ('Loop order', 'order'),
-    'dram-patterns': ('Element stride', 'step'),
+X_TITLES = {
+    'cache-latency': 'L1 data latency (cycles)',
+    'cache-size': 'L1 data size',
+    'sequential-vs-random': 'Access order',
+    'matmul': 'Loop order',
+    'dram-patterns': 'Stride (words)',
 }
 
-def plot(experiment):
-    csv_path = ROOT / 'experiments' / experiment / 'results/summary.csv'
-    if not csv_path.exists():
-        raise SystemExit(f'No real measurements at {csv_path}. Run gem5 first.')
-    with csv_path.open() as f: rows = list(csv.DictReader(f))
-    if not rows: raise SystemExit('Empty measurement file')
-    x_title, key = LABELS[experiment]
-    labels = [row[key] for row in rows]
-    seconds = [float(row['sim_seconds']) for row in rows]
-    fig, ax = plt.subplots(figsize=(11, 5.6))
-    ax.bar(labels, seconds, color='#008eae', width=.55)
-    ax.set(xlabel=x_title, ylabel='Simulated seconds', title=experiment.replace('-', ' ').title())
-    ax.spines[['top', 'right']].set_visible(False)
-    ax.tick_params(labelsize=15)
-    ax.xaxis.label.set_size(17); ax.yaxis.label.set_size(17)
-    ax.title.set_size(20)
-    fig.tight_layout()
-    destination = ROOT / 'assets/plots' / (experiment + '.svg')
-    fig.savefig(destination, bbox_inches='tight')
-    plt.close(fig)
-    print(destination)
-    if experiment == 'cache-size':
-        pairs = [(r, float(r['l1d_misses']) / float(r['l1d_accesses']))
-                 for r in rows if r['l1d_misses'] and r['l1d_accesses']
-                 and float(r['l1d_accesses']) > 0]
-        if len(pairs) == len(rows):
-            fig, ax = plt.subplots(figsize=(11, 5.6))
-            ax.bar(labels, [p[1] * 100 for p in pairs], color='#008eae', width=.55)
-            ax.set(xlabel=x_title, ylabel='L1 data miss rate (%)', title='Cache Size And Miss Rate')
-            ax.spines[['top', 'right']].set_visible(False)
-            ax.tick_params(labelsize=15)
-            fig.tight_layout()
-            fig.savefig(ROOT / 'assets/plots/cache-size-miss-rate.svg', bbox_inches='tight')
-            plt.close(fig)
 
-if __name__ == '__main__':
-    if len(sys.argv) != 2 or sys.argv[1] not in NAMES:
-        raise SystemExit('usage: python3 scripts/plot_results.py ' + '|'.join(NAMES))
-    plot(sys.argv[1])
+def read_stats(path):
+    stats = {}
+    for line in path.read_text().splitlines():
+        parts = line.split()
+        if len(parts) >= 2:
+            try: stats[parts[0]] = float(parts[1])
+            except ValueError: pass
+    return stats
+
+
+def find(stats, suffix):
+    return next((v for k, v in stats.items() if k.endswith(suffix)), None)
+
+
+def order(name):
+    match = re.match(r'\d+', name)
+    return (0, int(match.group()), name) if match else (1, 0, name)
+
+
+def bar(labels, values, x_title, y_title, title, filename):
+    fig, ax = plt.subplots(figsize=(11, 5.6))
+    ax.bar(labels, values, color='#008eae', width=.55)
+    ax.set(xlabel=x_title, ylabel=y_title, title=title)
+    ax.spines[['top', 'right']].set_visible(False)
+    fig.tight_layout()
+    fig.savefig(ROOT / 'assets/plots' / filename, bbox_inches='tight')
+    plt.close(fig)
+    print('assets/plots/' + filename)
+
+
+if len(sys.argv) != 2 or sys.argv[1] not in X_TITLES:
+    sys.exit('usage: python3 scripts/plot_results.py ' + '|'.join(X_TITLES))
+experiment = sys.argv[1]
+runs = sorted((ROOT / 'results' / experiment).glob('*/stats.txt'),
+              key=lambda p: order(p.parent.name))
+if not runs:
+    sys.exit(f'No results in results/{experiment}/. Run ./sweep-se.sh first.')
+
+labels = [p.parent.name for p in runs]
+stats = [read_stats(p) for p in runs]
+title = experiment.replace('-', ' ').title()
+bar(labels, [s['simSeconds'] for s in stats], X_TITLES[experiment],
+    'Simulated seconds', title, experiment + '.svg')
+if experiment == 'cache-size':
+    rates = [find(s, 'l1dcaches.demandMissRate::total') for s in stats]
+    bar(labels, [r * 100 for r in rates], X_TITLES[experiment],
+        'L1 data miss rate (%)', 'Cache Size And Miss Rate',
+        'cache-size-miss-rate.svg')
