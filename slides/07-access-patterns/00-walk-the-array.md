@@ -2,7 +2,7 @@
 marp: true
 theme: workshop
 paginate: true
-title: 05 access patterns
+title: Access patterns
 author: Workshop
 ---
 
@@ -10,7 +10,7 @@ author: Workshop
 
 ## Same data. Different order.
 
-![sequential width:970px](../../assets/diagrams/sequential.svg)
+![Sequential visits: each step goes to the next address width:1000px](../../assets/diagrams/sequential.svg)
 
 Now change the visit order.
 
@@ -33,9 +33,9 @@ for (size_t i = 0; i < n; ++i)
 
 ## Now jump through the array.
 
-![strided width:970px](../../assets/diagrams/permuted.svg)
+![A repeatable random order visits each location once width:970px](../../assets/diagrams/random.svg)
 
-**Permuted access:** the next address may be far away.
+**Random access:** the next address may be far away.
 
 <!-- The runnable random example uses an invertible deterministic index mixer. It visits every element once per pass but computes more index arithmetic. -->
 
@@ -43,17 +43,17 @@ for (size_t i = 0; i < n; ++i)
 
 ## Prediction: which finishes first?
 
-**A: sequential**　　　**B: permuted order**
+**A: sequential**　　　**B: random order**
 
 Same array size, checksum, CPU model, and memory.
 
-The traversal code changes.
+The loop that picks the next element changes.
 
-<!-- Take a vote. The permuted order also changes instruction arithmetic slightly; discuss this limitation when reading timing and miss counts. -->
+<!-- Take a vote. The random order also changes instruction arithmetic slightly; discuss this limitation when reading timing and miss counts. -->
 
 ---
 
-## An example measured on a CPU.
+## Measured on a real CPU.
 
 ![Measured host access pattern times width:820px](../../assets/plots/host-access-patterns.svg)
 
@@ -65,7 +65,7 @@ The traversal code changes.
 
 ## Time alone does not explain the gap.
 
-The permuted program also computes its indexes differently.
+The random program also computes its indexes differently.
 
 Check **instruction count** before blaming memory.
 

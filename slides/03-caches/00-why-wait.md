@@ -10,7 +10,7 @@ author: Workshop
 
 ## The CPU needs A[5]. It may have to wait.
 
-![Illustrative work and wait timeline width:970px](../../assets/diagrams/cpu-wait.svg)
+![Illustrative work and wait timeline width:1000px](../../assets/diagrams/cpu-wait.svg)
 
 **The value must arrive before the CPU can use it.**
 

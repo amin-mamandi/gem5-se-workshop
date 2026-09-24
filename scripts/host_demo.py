@@ -15,7 +15,7 @@ PLOTS = ROOT / 'assets/plots'
 RUNS = 7
 CASES = [
     ('Sequential', ['examples/sequential/main', '1048576', '8']),
-    ('Permuted', ['examples/random/main', '1048576', '8']),
+    ('Random', ['examples/random/main', '1048576', '8']),
     ('ijk', ['examples/matmul/main', '256', 'ijk']),
     ('ikj', ['examples/matmul/main', '256', 'ikj']),
 ]

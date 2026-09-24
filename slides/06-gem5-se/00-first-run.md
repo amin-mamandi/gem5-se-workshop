@@ -2,7 +2,7 @@
 marp: true
 theme: workshop
 paginate: true
-title: 08 gem5 se
+title: gem5 SE
 author: Workshop
 ---
 
@@ -69,6 +69,6 @@ Find it in `stats.txt`. What does it measure?
 
 **Why is the next version slower or faster?**
 
-Check instruction count, cache misses, DRAM bursts, then time.
+Check instruction count, cache misses, DRAM reads, then time.
 
 <!-- This evidence sequence guards against attributing an instruction-count change solely to memory. -->

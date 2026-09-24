@@ -1,5 +1,5 @@
 case,median_ms,checksum,runs
 Sequential,4.9954,sum=4398042316800,7
-Permuted,20.5301,sum=4398042316800,7
+Random,20.5301,sum=4398042316800,7
 ijk,17.2309,checksum=100659197,7
 ikj,7.9873,checksum=100659197,7

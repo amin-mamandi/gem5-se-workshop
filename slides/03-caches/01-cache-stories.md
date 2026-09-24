@@ -10,7 +10,7 @@ author: Workshop
 
 ## Meet the cache.
 
-![CPU request for A[5] through a cache toward DRAM width:970px](../../assets/diagrams/cache-structure.svg)
+![CPU request for A[5] through a cache toward DRAM width:1000px](../../assets/diagrams/cache-structure.svg)
 
 **It keeps copies of data the CPU may use again.**
 
@@ -52,6 +52,6 @@ A fetched block is called a **cache line**.
 
 ![Our data path from CPU to L1 data cache, L2, and DRAM width:970px](../../assets/diagrams/cpu-l1-l2-dram.svg)
 
-**An L1 data miss may hit in L2 before reaching DRAM.**
+**A Level 1 (L1) data miss may hit in Level 2 (L2) before reaching DRAM.**
 
 <!-- This is the data request path in the actual one-core workshop configuration. It has a separate L1 instruction cache, not shown here, and no LLC. A cache hit at any earlier stage stops the request from traveling farther. -->

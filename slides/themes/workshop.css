@@ -30,7 +30,7 @@ section::after { color: #899ca8; font-size: 17px; bottom: 20px; }
 section.title { background: #0b4053; color: white; display: flex;
   flex-direction: column; justify-content: center; }
 section.title h2 { color: white; font-size: 57px; margin-bottom: 16px; }
-section.title img { max-height: 280px; max-width: 840px; }
+section.title img { max-height: 380px; max-width: 1000px; }
 section.title p { font-size: 27px; margin: 7px 0; }
 section.title h2::before { border-color: #46c8d9; }
 section.title strong { color: #7adddf; }

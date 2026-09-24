@@ -24,7 +24,9 @@ if (cells[2] == 30) puts("sum = 30");
 
 ## Memory holds instructions and data
 
-![One RAM contains program instructions and array values width:970px](../../assets/diagrams/instructions-and-data.svg)
+![One RAM contains program instructions and array values width:900px](../../assets/diagrams/instructions-and-data.svg)
+
+Main memory is **Random Access Memory (RAM)**.
 
 **A fetch reads an instruction. LOAD reads a data value.**
 
@@ -36,7 +38,7 @@ if (cells[2] == 30) puts("sum = 30");
 
 ![Address, read command, and returning data between a simplified CPU and RAM width:970px](../../assets/diagrams/ram-read-wires.svg)
 
-**Address: where? Read: what action? Data: the reply.**
+**ADDRESS: where? READ: what action? DATA: the reply.**
 
 <!-- Walk through reading cells[0], whose value is 10. The address and read command travel toward memory; the value returns. These are logical signal groups, not a motherboard pinout. This is the video's simple wiring model (02:59–03:56). In our gem5 computer, the CPU consults caches, and the memory controller drives DRAM if necessary. -->
 
@@ -44,7 +46,7 @@ if (cells[2] == 30) puts("sum = 30");
 
 ## The program counter selects the next instruction
 
-![Program counter sends the next instruction address; instruction bits reach control width:970px](../../assets/diagrams/fetch-instruction.svg)
+![Program counter sends the next instruction address; instruction bits reach control width:900px](../../assets/diagrams/fetch-instruction.svg)
 
 **Usually it advances. A jump can give it a different address.**
 
@@ -66,7 +68,7 @@ if (cells[2] == 30) puts("sum = 30");
 
 ![Control selects ADD, registers provide 10 and 20, ALU returns 30 width:970px](../../assets/diagrams/alu-add-control.svg)
 
-**The ALU computes 10 + 20; a register holds 30.**
+**The Arithmetic Logic Unit (ALU) computes 10 + 20; a register holds 30.**
 
 <!-- Read the arrows by their labels, rather than as a time line. Control decodes an ADD-like operation and selects the ALU function; registers provide two values and receive the result. The Scott CPU in the video shows control, ALU, registers, and enable/set wires around 08:49–13:22. A real x86 core is much more elaborate. -->
 
@@ -79,7 +81,7 @@ if (cells[2] == 30)
     puts("sum = 30");
 ```
 
-![ALU compares 30 with 30 and sets an equal condition width:970px](../../assets/diagrams/compare-equal.svg)
+![ALU compares 30 with 30 and sets an equal condition width:900px](../../assets/diagrams/compare-equal.svg)
 
 <!-- First the CPU obtains cells[2]. Conceptually, the ALU compares it with 30 and records the equal result in condition flags. This is not the same operation as storing 30; the comparison asks a question about values already available. The video introduces compare and flags around 09:11–10:26 and 13:51–15:31. -->
 
@@ -92,13 +94,3 @@ if (cells[2] == 30)
 **JUMP goes to its target. JUMP IF checks the condition.**
 
 <!-- JUMP picks a new instruction address unconditionally. JUMP IF does so only when its condition holds; otherwise execution continues along the other path. A compiler can arrange which path is the branch target, so the two arrows are conceptual outcomes, not specific x86 branch opcodes. The video describes JUMP and JUMP IF at 06:17–06:38 and 16:38–17:15. -->
-
----
-
-## A real memory request may stop at a cache
-
-![CPU request checks cache before a memory controller reaches DRAM width:970px](../../assets/diagrams/cpu-cache-controller-dram.svg)
-
-**A cache hit returns the data without visiting DRAM.**
-
-<!-- This connects the video's simplified CPU-to-RAM wires to the workshop machine. For a data request, try the cache first; a miss goes toward the memory controller and DRAM. Instruction fetches also use caches, usually a separate L1 instruction cache. This sketch omits the workshop's L2 cache for readability; its detailed hierarchy appears later. -->

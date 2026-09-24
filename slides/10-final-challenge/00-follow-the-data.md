@@ -2,7 +2,7 @@
 marp: true
 theme: workshop
 paginate: true
-title: 11 final challenge
+title: Final challenge
 author: Workshop
 ---
 
@@ -50,8 +50,10 @@ That matters because the CPU __________.
 
 ## Take this lab home.
 
-**Edit a module. Change a diagram. Rerun one experiment.**
+**Everything is in one repository:** slides, examples, and scripts.
 
-The source is the presentation.
+`github.com/amin-mamandi/gem5-se-workshop`
 
-<!-- Point to the README for Marp, the local RISC-V gem5.opt build, and refreshing SVGs and plots. Ask participants to state the next question they want to test. -->
+Change a setting. Rerun one experiment. Explain what changed.
+
+<!-- Point to the README for building gem5, running the examples, and showing the slides. Ask participants to state the next question they want to test. -->

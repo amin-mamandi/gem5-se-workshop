@@ -6,8 +6,6 @@ title: DRAM banks and command timing
 author: Workshop
 ---
 
-<img class="gem5-brand" src="../../assets/images/gem5-icon.png" alt="gem5 logo" />
-
 ## Each bank has a row buffer
 
 ![Two banks with rows and a separate open-row buffer in each width:970px](../../assets/diagrams/dram-bank-row-buffers.svg)
@@ -18,19 +16,15 @@ author: Workshop
 
 ---
 
-<img class="gem5-brand" src="../../assets/images/gem5-icon.png" alt="gem5 logo" />
-
 ## Three commands change the bank state
 
 ![ACT opens a row, READ chooses a column, and PRE closes the row width:970px](../../assets/diagrams/dram-command-roles.svg)
 
-**ACT opens. READ/CAS selects. PRE closes.**
+**Activate (ACT) opens. READ / Column Address Strobe (CAS) selects. Precharge (PRE) closes.**
 
 <!-- READ is the DDR3 command carrying a column address. CAS is a common shorthand for this column operation; tCL denotes the READ-to-first-data delay. ACTIVATE and PRECHARGE are commands to the bank. PRE need not occur after every read: an open-page policy can keep the row available for later reads. Source: Micron DDR3 SDRAM datasheet, sections ACTIVATE, READ, and PRECHARGE, https://www.alliancememory.com/wp-content/uploads/Micron_2Gb_DDR3_SDRAM_PartNo.MT41J128M16JT-107.pdf . -->
 
 ---
-
-<img class="gem5-brand" src="../../assets/images/gem5-icon.png" alt="gem5 logo" />
 
 ## Row hit: the row is already open
 
@@ -42,8 +36,6 @@ author: Workshop
 
 ---
 
-<img class="gem5-brand" src="../../assets/images/gem5-icon.png" alt="gem5 logo" />
-
 ## Row miss: the bank is closed
 
 ![ACT for a closed bank, tRCD, READ/CAS, tCL, and first data width:970px](../../assets/diagrams/dram-timeline-closed.svg)
@@ -53,8 +45,6 @@ author: Workshop
 <!-- A closed/idle bank needs ACT before READ. tRCD is the minimum time from ACT to READ; tCL is READ to first data. These are command constraints, not the full time seen by an application. Source: gem5 DDR3_1600_8x8 timing parameters, https://gem5.googlesource.com/public/gem5/%2B/master/src/python/gem5/components/memory/dram_interfaces/ddr3.py . -->
 
 ---
-
-<img class="gem5-brand" src="../../assets/images/gem5-icon.png" alt="gem5 logo" />
 
 ## Row miss: another row is open
 
@@ -66,8 +56,6 @@ author: Workshop
 
 ---
 
-<img class="gem5-brand" src="../../assets/images/gem5-icon.png" alt="gem5 logo" />
-
 ## Row state changes the earliest data time
 
 ![Sourced DDR3-1600 command delays for row hit, closed row, and conflict width:970px](../../assets/diagrams/dram-latency-comparison.svg)
@@ -75,18 +63,3 @@ author: Workshop
 **More bank work means a longer command path.**
 
 <!-- This is a calculation from timing parameters, not a measured gem5 result: gem5's DDR3_1600_8x8 lists tCL=tRCD=tRP=13.75 ns. Assuming a read can issue now (hit), ACT can issue now (closed), or PRE can issue now (conflict), idealized first-data offsets are 13.75, 27.5, and 41.25 ns respectively. The conflict can take longer if tRAS or read-to-precharge blocks PRE. Queueing, scheduling, refresh, other banks, burst transfer, caches, interconnect, and CPU overlap are excluded. Source: https://gem5.googlesource.com/public/gem5/%2B/master/src/python/gem5/components/memory/dram_interfaces/ddr3.py ; Micron DDR3 datasheet https://www.alliancememory.com/wp-content/uploads/Micron_2Gb_DDR3_SDRAM_PartNo.MT41J128M16JT-107.pdf . -->
-
----
-
-<img class="gem5-brand" src="../../assets/images/gem5-icon.png" alt="gem5 logo" />
-
-## Let the measured bank behavior decide
-
-```bash
-grep -irn "readRowHitRate" results/dram-patterns/
-grep -irn "dram.readBursts" results/dram-patterns/
-```
-
-Read **row hit rate and read bursts** before explaining time.
-
-<!-- Run sweep-se.sh first; its final loop bypasses caches. Odd steps 1, 1025, and 8191 each visit every word. Page and bank mapping may make row stats differ from a naive prediction. The three calculated command paths above do not predict application runtime. -->

@@ -8,19 +8,15 @@ author: Workshop
 
 <!-- _class: title -->
 
-<img class="gem5-brand" src="../../assets/images/gem5-icon.png" alt="gem5 logo" />
-
 ## How does DRAM find the data?
 
-![Controller selects a bank and row within DRAM width:970px](../../assets/diagrams/dram-structure.svg)
+![Controller selects a bank and row within DRAM width:1000px](../../assets/diagrams/dram-structure.svg)
 
 **A memory controller selects a bank and a row.**
 
 <!-- The controller is outside the DRAM chips. A DRAM read returns data through the controller toward the caches and CPU. -->
 
 ---
-
-<img class="gem5-brand" src="../../assets/images/gem5-icon.png" alt="gem5 logo" />
 
 ## DRAM stores bits as charge.
 
@@ -32,8 +28,6 @@ author: Workshop
 
 ---
 
-<img class="gem5-brand" src="../../assets/images/gem5-icon.png" alt="gem5 logo" />
-
 ## DRAM has independent banks and rows.
 
 ![Two DRAM banks with rows width:970px](../../assets/diagrams/dram-banks.svg)
@@ -41,8 +35,6 @@ author: Workshop
 <!-- Banks can work somewhat independently; each bank has many rows and can have an open row. The shown rows are a small teaching sample, not the actual geometry of DDR3. -->
 
 ---
-
-<img class="gem5-brand" src="../../assets/images/gem5-icon.png" alt="gem5 logo" />
 
 ## Same open row: row hit.
 
@@ -53,8 +45,6 @@ The bank can reuse its open row.
 <!-- The request travels toward the bank. A DRAM row buffer hit is different from a CPU cache hit. -->
 
 ---
-
-<img class="gem5-brand" src="../../assets/images/gem5-icon.png" alt="gem5 logo" />
 
 ## Different row, same bank: conflict.
 

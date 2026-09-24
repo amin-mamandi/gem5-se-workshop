@@ -37,6 +37,24 @@ The CPU walkthrough draws on [How a CPU Works](https://www.youtube.com/watch?v=c
 especially its explanations of RAM address/read/data signals (03:00–04:00),
 instruction types (05:25–06:40), control and the ALU (08:49–10:30), and the
 next instruction address (15:36–17:15). The video's teaching CPU omits the
-cache hierarchy; the final walkthrough slide adds our model's cache and
+cache hierarchy; the last slide of the cache section adds our model's cache and
 memory controller. The pseudoinstructions on slides are teaching labels, not
 an exact disassembly of `cpu_walkthrough.c`.
+
+The deck follows the computer hierarchy: CPU first, then caches, and memory
+last. The hierarchy slide is adapted from the System Architecture slide in
+GEA Presentation 2. The beginner CPU slides (transistors, bits, the
+fetch-decode-execute loop, clock speed, cores, and what makes a CPU faster)
+draw on [imec's transistor explainer](https://www.imec-int.com/en/semiconductor-education-and-workforce-development/microchips/history-microchips/transistors),
+[Khan Academy's bits article](https://www.khanacademy.org/computing/computers-and-internet/xcae6f4a7ff015e7d:digital-information/xcae6f4a7ff015e7d:bits-and-bytes/a/bits-binary-digits),
+[Fetch, decode, execute (repeat!)](https://www.uvm.edu/~cbcafier/cs2210/content/02_basics_of_architecture/fetch_decode_execute.html),
+[CSNewbs on CPU performance](https://www.csnewbs.com/ocr2020-1-2-cpuperformance),
+and [Apple's M4 announcement](https://www.apple.com/newsroom/2024/05/apple-introduces-m4-chip/)
+for the transistor and core counts.
+
+The gem5 background and build slides use gem5's own
+[about page](https://www.gem5.org/about/),
+[building guide](https://www.gem5.org/documentation/general_docs/building), and
+[standard library overview](https://www.gem5.org/documentation/gem5-stdlib/overview).
+They come before the access-pattern results, so the audience meets gem5 before
+seeing any measurements.

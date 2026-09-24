@@ -2,7 +2,7 @@
 marp: true
 theme: workshop
 paginate: true
-title: 06 matrix
+title: Matrix multiplication
 author: Workshop
 ---
 
@@ -34,7 +34,7 @@ for (i ...)             for (i ...)
 
 ---
 
-## The B visits change direction.
+## Matrix B is read in a new direction.
 
 ![matrix-order width:970px](../../assets/diagrams/matrix-order.svg)
 
@@ -48,7 +48,7 @@ for (i ...)             for (i ...)
 
 ![Measured host loop order times width:820px](../../assets/plots/host-matmul.svg)
 
-**Same checksum; host timing only.**
+**Same answer. Measured on a real CPU, not gem5.**
 
 <!-- Show the CSV and reproduction command in scripts/host_demo.py. The host measurement motivates the model experiment; it cannot by itself prove a cache or DRAM cause. -->
 

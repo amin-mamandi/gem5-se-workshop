@@ -2,7 +2,7 @@
 marp: true
 theme: workshop
 paginate: true
-title: 02 cpu and isa
+title: CPU and ISA
 author: Workshop
 ---
 
@@ -10,19 +10,9 @@ author: Workshop
 
 ## The CPU follows an instruction vocabulary.
 
-Loads get data. Stores save it. Arithmetic changes it. Branches choose what comes next.
+Loads get data. Stores save it. Arithmetic changes it. Jumps choose what comes next.
 
 <!-- Use a cooking analogy: each instruction is a very small kitchen action; the exact mix depends on compiler and ISA. -->
-
----
-
-## A clock is a rhythm, not a finish time.
-
-**3 GHz ≈ 3 billion cycles each second.**
-
-One instruction can need multiple cycles; memory can make the CPU wait.
-
-<!-- Avoid saying cycles equal instructions. Approximation is dimensional: GHz means cycles per second. -->
 
 ---
 
@@ -30,26 +20,54 @@ One instruction can need multiple cycles; memory can make the CPU wait.
 
 ![isa width:970px](../../assets/diagrams/isa.svg)
 
-x86, Arm, and RISC-V are **instruction set architectures**.
+x86, Arm, and RISC-V are **Instruction Set Architectures (ISA)**.
 
 <!-- Explain ISA as the visible contract: the code a processor knows how to execute. Recompile C for a different target ISA. -->
 
 ---
 
-## Same language, different designs.
+## A clock sets the pace.
 
-**Two CPUs can run the same x86 program and finish at different times.**
+Each tick of the clock is one **cycle**.
 
-The ISA tells us *what* an instruction means, not how a chip implements it.
+**1 GHz = 1 billion cycles per second.**
 
-<!-- Analogize two people following the same recipe with different kitchens. Do not introduce microarchitecture yet. -->
+A **2 GHz** CPU ticks 2 billion times every second.
+
+<!-- The clock keeps every part of the CPU in step. A faster clock gives more cycles each second, so more fetch-decode-execute steps can finish. One instruction can take several cycles, and waiting for memory adds more; later we count cache time in cycles. Our gem5 model runs at 2 GHz (clk_freq in configs/workshop.py). Source: CSNewbs, OCR GCSE 1.2 CPU performance, https://www.csnewbs.com/ocr2020-1-2-cpuperformance . -->
 
 ---
 
 ## More instructions per second can mislead.
 
-**MIPS = millions of instructions per second.**
+**MIPS = Millions of Instructions Per Second.**
 
 Finishing a job matters more than the rate of counting steps.
 
 <!-- One walker takes five steps, another ten. Ask whether step rate alone settles which arrives first. Compare a fixed task and simulated seconds later. -->
+
+---
+
+## One chip can have many cores.
+
+Each **core** fetches, decodes, and executes its own instructions.
+
+Apple's M4 chip has up to **10 CPU cores**.
+
+More cores help only when the work can be split.
+
+<!-- Point back to the hierarchy slide: several cores, each with a private cache, share one larger cache and the memory. Our gem5 model uses one core, so each result is easy to explain. Sources: CSNewbs, OCR GCSE 1.2 CPU performance, https://www.csnewbs.com/ocr2020-1-2-cpuperformance ; Apple, "Apple introduces M4 chip" (May 2024): "up-to-10-core CPU", https://www.apple.com/newsroom/2024/05/apple-introduces-m4-chip/ . -->
+
+---
+
+## What makes a CPU faster?
+
+**Clock speed:** more cycles each second.
+
+**More cores:** more instructions at the same time.
+
+**Cache size:** more data kept close to the CPU.
+
+Next: the cache.
+
+<!-- These three factors appear in introductory computer science courses. A faster clock helps only while the CPU is not waiting for data; more cores help only if the program can use them. The rest of the workshop is about the third factor and the memory behind it. Source: CSNewbs, OCR GCSE 1.2 CPU performance, https://www.csnewbs.com/ocr2020-1-2-cpuperformance . -->
