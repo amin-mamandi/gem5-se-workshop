@@ -9,7 +9,7 @@ No arguments.
 
 ```bash
 # Prints 10 + 20 = 30
-./run-se.sh simple/main baseline/simple
+./run-se.sh simple baseline/simple
 
 # Prints sum = 30
 ./run-se.sh simple/cpu_walkthrough walkthrough

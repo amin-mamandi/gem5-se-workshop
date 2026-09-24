@@ -40,7 +40,7 @@ Expected output: **10 + 20 = 30**
 ## Then run it through gem5.
 
 ```bash
-./run-se.sh simple/main baseline/simple
+./run-se.sh simple baseline/simple
 ```
 
 Result: `results/baseline/simple/stats.txt`

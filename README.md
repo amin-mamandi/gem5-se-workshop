@@ -59,7 +59,7 @@ JOBS=2 ./build-gem5.sh
 
 ```bash
 # Should print 10 + 20 = 30
-./run-se.sh simple/main baseline/simple
+./run-se.sh simple baseline/simple
 ```
 
 More examples:
@@ -67,9 +67,9 @@ More examples:
 ```bash
 # Try a few other programs
 ./run-se.sh simple/cpu_walkthrough walkthrough
-./run-se.sh sequential/main size-64kB --l1d-size 64kB --arg 16384 --arg 40
-./run-se.sh matmul/main matmul/ijk --arg 96 --arg ijk
-./run-se.sh matmul/main matmul/ikj --arg 96 --arg ikj
+./run-se.sh sequential size-64kB --l1d-size 64kB --arg 16384 --arg 40
+./run-se.sh matmul matmul/ijk --arg 96 --arg ijk
+./run-se.sh matmul matmul/ikj --arg 96 --arg ikj
 ```
 
 Results go to `results/<name>/`.
@@ -92,8 +92,6 @@ grep -irn "l2cache.demandMissRate::total" results/ --include=stats.txt
 grep -irn "dram.readBursts" results/ --include=stats.txt
 grep -irn "readRowHitRate" results/dram-patterns/ --include=stats.txt
 ```
-
-See [RESULTS.md](RESULTS.md) for measured results.
 
 ## 8. Optional: CSVs and plots
 

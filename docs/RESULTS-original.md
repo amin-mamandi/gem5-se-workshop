@@ -1,8 +1,7 @@
 # Historical results from the original instructor environment
 
 These measurements used a modified gem5 build and a Buildroot compiler before
-the standalone repository was created. They are preserved for provenance; use
-[the standalone results](../RESULTS.md) for the current setup.
+the standalone repository was created. They are preserved for provenance only.
 
 Measured on 2026-09-23 with `../build/RISCV/gem5.opt` (gem5 25.1.0.0,
 local project build) and `./sweep-se.sh`. All **21 runs completed**: the six

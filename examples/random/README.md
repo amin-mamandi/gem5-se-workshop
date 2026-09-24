@@ -11,6 +11,6 @@ Each word is still visited once per pass, so the sum matches `sequential`.
 
 ```bash
 # 4 MB array, 4 passes
-./run-se.sh random/main rand-read  --arg 1048576 --arg 4 --arg read
-./run-se.sh random/main rand-write --arg 1048576 --arg 4 --arg write
+./run-se.sh random rand-read  --arg 1048576 --arg 4 --arg read
+./run-se.sh random rand-write --arg 1048576 --arg 4 --arg write
 ```

@@ -10,6 +10,6 @@ but touch memory in a different order.
 
 ```bash
 # Compare the two loop orders
-./run-se.sh matmul/main matmul/ijk --arg 96 --arg ijk
-./run-se.sh matmul/main matmul/ikj --arg 96 --arg ikj
+./run-se.sh matmul matmul/ijk --arg 96 --arg ijk
+./run-se.sh matmul matmul/ikj --arg 96 --arg ikj
 ```

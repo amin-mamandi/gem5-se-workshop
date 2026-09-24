@@ -3,16 +3,15 @@
 Local build: **`./build/RISCV/gem5.opt`**, RISC-V, classic cache hierarchy,
 TimingSimpleCPU, SimpleBoard, DDR3_1600_8x8 single channel, 2 GHz.
 The config is `configs/workshop.py`; it uses `BinaryResource` and
-`set_se_binary_workload`. Both runners accept `GEM5_BIN` for an existing
-RISC-V simulator. `./build-gem5.sh` clones the latest upstream source on first
-use. The tested revision is recorded in [RESULTS.md](../RESULTS.md).
+`set_se_binary_workload`. `./build-gem5.sh` clones the latest upstream source on first
+use. The tested revision is in [gem5-revision.txt](../gem5-revision.txt).
 Build native C programs with `make`; `make gem5` builds static RISC-V SE binaries.
 The default cross compiler is `riscv64-linux-gnu-gcc`;
 override it with `GEM5_CC` if needed. Confirm the ISA with
 `file examples/simple/main-gem5`.
 
 ```bash
-./run-se.sh simple/main baseline/simple
+./run-se.sh simple baseline/simple
 ./sweep-se.sh
 grep -irn "simSeconds" results/ --include=stats.txt
 grep -irn "readRowHitRate" results/dram-patterns/ --include=stats.txt

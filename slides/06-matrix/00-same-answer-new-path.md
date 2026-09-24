@@ -59,8 +59,8 @@ for (i ...)             for (i ...)
 **Check the checksum. Compare simulated seconds. Inspect L1 misses.**
 
 ```bash
-./run-se.sh matmul/main matmul/ijk --arg 96 --arg ijk
-./run-se.sh matmul/main matmul/ikj --arg 96 --arg ikj
+./run-se.sh matmul matmul/ijk --arg 96 --arg ijk
+./run-se.sh matmul matmul/ikj --arg 96 --arg ikj
 ```
 
 <!-- Before running, ask which arrangement offers more spatial reuse on row-major C arrays. Discuss processor caches versus DRAM row locality separately. -->

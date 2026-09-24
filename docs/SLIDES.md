@@ -18,7 +18,7 @@ describes spacing and permitted icon use.
 The annotated die image credits its annotator inside the image. The 49% DRAM
 cost chart lacks a system configuration, source, and date, so the slide labels
 it as an illustrative cost mix rather than a general cost claim. The simulation
-config uses upstream gem5; the tested revision is recorded in [RESULTS.md](../RESULTS.md).
+config uses upstream gem5; the tested revision is in [gem5-revision.txt](../gem5-revision.txt).
 The experiment config contains split L1 caches and a shared L2. Diagram
 captions and notes mark conceptual examples and simplifications. The workshop
 uses SE mode only.

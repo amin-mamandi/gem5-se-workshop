@@ -1,37 +1,36 @@
 #!/usr/bin/env bash
-# Compile and run ONE example in syscall-emulation (SE) mode on RISC-V gem5.opt.
-# Usage: ./run-se.sh simple/main baseline/simple [workshop.py options]
-# The first argument is a source path below examples/, without .c.
-# The second names a directory below results/; repeating it replaces that run.
-# No instruction/tick limit: these small programs run to completion, including
-# initialization and libc. Each parameter comparison must use the same input.
+# Compile one example and run it on gem5.
+#
+# Usage:   ./run-se.sh <example> [label] [options]
+# Example: ./run-se.sh sequential seq-64kB --l1d-size 64kB --arg 16384 --arg 40
+#
+# <example>  folder in examples/ (sequential), or a file (simple/cpu_walkthrough)
+# [label]    output goes to results/<label>; defaults to <example>
+# [options]  --arg X, --l1d-size, --l1d-latency, --no-cache
 set -euo pipefail
 cd "$(dirname "$0")"
 
-program=${1:?Usage: ./run-se.sh simple/main baseline/simple [config options]}
-label=${2:?Supply a result name, for example baseline/simple}
-shift 2
-
-GEM5_CC=${GEM5_CC:-riscv64-linux-gnu-gcc}
-GEM5_BIN=${GEM5_BIN:-./build/RISCV/gem5.opt}
-if ! command -v "$GEM5_CC" >/dev/null; then
-    echo "Install gcc-riscv64-linux-gnu and libc6-dev-riscv64-cross (see README.md)." >&2
-    exit 1
-fi
-if [[ ! -x "$GEM5_BIN" ]]; then
-    echo "Simulator missing: $GEM5_BIN. Run ./build-gem5.sh first." >&2
-    exit 1
+example=${1:?Usage: ./run-se.sh <example> [label] [options]}
+shift
+label=$example
+if [[ $# -gt 0 && $1 != --* ]]; then
+    label=$1
+    shift
 fi
 
-"$GEM5_CC" \
-    -O2 -std=c11 -Wall -Wextra -fno-tree-vectorize -static -no-pie \
-    "examples/$program.c" -o "examples/$program-gem5"
+# "sequential" means examples/sequential/main.c
+src=examples/$example.c
+[[ -f $src ]] || src=examples/$example/main.c
+[[ -f $src ]] || { echo "No such example: $example" >&2; exit 1; }
 
-mkdir -p "results/$label"
-echo "Running $program -> results/$label"
-"$GEM5_BIN" --outdir="results/$label" \
-    configs/workshop.py --binary "examples/$program-gem5" "$@" \
-    2>&1 | tee "results/$label/run.log"
+out=results/$label
 
-grep -irn "simSeconds" "results/$label/stats.txt"
-grep -irn "simInsts" "results/$label/stats.txt"
+riscv64-linux-gnu-gcc -O2 -std=c11 -Wall -Wextra -fno-tree-vectorize -static -no-pie \
+    "$src" -o "${src%.c}-gem5"
+
+mkdir -p "$out"
+echo "Running $src -> $out"
+./build/RISCV/gem5.opt --outdir="$out" configs/workshop.py --binary "${src%.c}-gem5" "$@" \
+    2>&1 | tee "$out/run.log"
+
+grep -E "^(simSeconds|simInsts) " "$out/stats.txt"

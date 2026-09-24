@@ -2,10 +2,6 @@
 
 set -euo pipefail
 
-# build experiments' binaries for gem5 riscv SE mode
-make gem5
-
-
 sudo apt install -y  build-essential scons python3-dev git pre-commit zlib1g zlib1g-dev \
     libprotobuf-dev protobuf-compiler libprotoc-dev libgoogle-perftools-dev \
     libboost-all-dev  libhdf5-serial-dev python3-pydot python3-venv python3-tk mypy \
@@ -15,6 +11,9 @@ sudo apt install -y  build-essential scons python3-dev git pre-commit zlib1g zli
 
 cd "$(dirname "$0")"
 workshop_dir=$PWD
+
+# Build the examples after installing the RISC-V compiler.
+make gem5
 
 if [[ ! -d gem5 ]]; then
     git clone --depth 1 https://github.com/gem5/gem5.git

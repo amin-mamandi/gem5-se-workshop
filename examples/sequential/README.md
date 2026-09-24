@@ -10,6 +10,6 @@ Goes over an array from start to end, over and over.
 
 ```bash
 # 64 KB array, 40 passes
-./run-se.sh sequential/main seq-read  --arg 16384 --arg 40 --arg read
-./run-se.sh sequential/main seq-write --arg 16384 --arg 40 --arg write
+./run-se.sh sequential seq-read  --arg 16384 --arg 40 --arg read
+./run-se.sh sequential seq-write --arg 16384 --arg 40 --arg write
 ```

@@ -11,8 +11,8 @@ Every word is still read once per pass.
 
 ```bash
 # Try different jump sizes
-./run-se.sh dram-patterns/main dram/1    --no-cache --arg 16384 --arg 1    --arg 5
-./run-se.sh dram-patterns/main dram/8191 --no-cache --arg 16384 --arg 8191 --arg 5
+./run-se.sh dram-patterns dram/1    --no-cache --arg 16384 --arg 1    --arg 5
+./run-se.sh dram-patterns dram/8191 --no-cache --arg 16384 --arg 8191 --arg 5
 ```
 
 `--no-cache` skips the caches so every read goes to memory.
