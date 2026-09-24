@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "preview": "npm run build && python3 -m http.server 8000 --bind 127.0.0.1",
+    "preview": "npm run build && echo Open http://127.0.0.1:8000/dist/index.html && python3 -m http.server 8000 --bind 127.0.0.1",
     "build": "python3 scripts/assemble_deck.py && marp .build/complete.md -o dist/index.html --theme-set slides/themes/workshop.css --html --allow-local-files",
     "pdf": "python3 scripts/assemble_deck.py && marp .build/complete.md -o dist/workshop.pdf --theme-set slides/themes/workshop.css --pdf --allow-local-files",
     "modules": "rm -rf dist/modules dist/assets && marp -I slides --html --theme-set slides/themes/workshop.css -o dist/modules --allow-local-files && cp -R assets dist/assets"

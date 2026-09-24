@@ -12,23 +12,20 @@ cd gem5-se-workshop
 
 ## 2. Show the slides
 
-Install the **Marp for VS Code** extension first.
+Needs Node.js 22+.
 
 ```bash
-# Open slides in VS Code
-code .
+# Install the slide tool
+npm ci
+
+# Build and serve slides
 ./show-slides.sh
 ```
 
-Then press **Ctrl+Shift+P** → **Markdown: Open Preview to the Side**.
-
-Optional HTML/PDF build (needs Node.js 22+):
+Open http://127.0.0.1:8000/dist/index.html in your browser.
 
 ```bash
-# Build slides as HTML/PDF
-npm ci
-npm run build
-npm run preview
+# Optional: build a PDF
 npm run pdf
 ```
 
