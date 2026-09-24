@@ -41,4 +41,4 @@ cd ../..
 Same instructions and misses in every run: **only the hit time changed.**
 Does time grow by the same amount at each step?
 
-<!-- Our runs: 4,662,071 instructions and a 0.14% L1 data miss rate in all four. Simulated time: 3.37 ms (1 cycle), 3.71 ms (2), 4.39 ms (4), 5.74 ms (8). Every L1 hit now waits longer, so time grows with the latency, and each doubling adds more than the last. -->
+<!-- Our runs: 4,662,071 instructions and a 0.14% L1 data miss rate in all four. Simulated time: 3.37 ms (1 cycle), 3.71 ms (2), 4.39 ms (4), 5.74 ms (8). Time grows linearly: each extra cycle adds 0.34 ms, one cycle for each of the 674,832 L1 data accesses (x 0.5 ns at 2 GHz). The steps double (1, 2, 4), so the increases double: +0.34, +0.68, +1.35 ms. The simple CPU waits for every access, so nothing hides the extra latency. -->

@@ -40,4 +40,4 @@ cd ../..
 
 Same checksum? Fewer misses, **but more instructions?** Which wins here?
 
-<!-- Our 96 x 96 runs: same checksum (5306681). ikj has 6x fewer L1 data misses (0.05% vs 0.32%) but runs 12% more instructions (8.19 M vs 7.31 M) and finishes later (5.97 ms vs 4.68 ms). All three matrices (about 144 KiB) fit in the 256 kB L2, so misses are cheap here, and this simple CPU pays for every instruction. The host chart used 256 x 256 matrices on a real out-of-order CPU, where ikj won. Ask: what would change the winner in gem5? -->
+<!-- Our 96 x 96 runs: same checksum (5306681). ikj has 4x fewer L1 data misses (1,420 vs 5,915) but finishes later (5.97 ms vs 4.68 ms). ikj stores C on every inner step: 875 K extra stores, exactly its 875 K extra instructions; ijk keeps C in a register. All three matrices (about 144 KiB) fit in the 256 kB L2, so the extra misses in ijk cost little, and this simple CPU pays for every instruction and store. The host chart used 256 x 256 matrices on a real out-of-order CPU, where ikj won. Ask: what would change the winner in gem5? -->

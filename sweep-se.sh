@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Run the examples and the exact parameter choices shown in the slides.
 # Sequential runs keep the workshop easy to follow and light on host memory.
-# DRAM jump sizes run without caches, then with caches, to show what caches hide.
+# DRAM jump sizes use a 4 MB array so cache misses reach DRAM; then caches off.
 # These are whole-program measurements; random also executes extra arithmetic.
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -35,15 +35,15 @@ for order in ijk ikj; do
     ./run-se.sh matmul "matmul/$order" --arg 96 --arg "$order"
 done
 
-# DRAM jump sizes with the caches off, then the same runs with caches on.
-for jump in 1 1025 8191; do
+# DRAM jump sizes: a 4 MB array, one pass, caches on; then the same runs with caches off.
+for jump in 1 1025 32769; do
     ./run-se.sh dram-patterns "dram-patterns/$jump" \
-        --no-cache --arg 16384 --arg "$jump" --arg 5
+        --cache --arg 1048576 --arg "$jump" --arg 1
 done
 
-for jump in 1 1025 8191; do
-    ./run-se.sh dram-patterns "dram-patterns-cache/$jump" \
-        --cache --arg 16384 --arg "$jump" --arg 5
+for jump in 1 1025 32769; do
+    ./run-se.sh dram-patterns "dram-patterns-no-cache/$jump" \
+        --no-cache --arg 1048576 --arg "$jump" --arg 1
 done
 
 # Restrict recursive grep to stats.txt, excluding config files and logs.

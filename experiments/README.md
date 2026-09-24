@@ -27,8 +27,8 @@ slide preview steps are in the [workshop README](../README.md).
 | cache-size | L1D size 16, 32, 64, 128 kB | sequential 16K words × 40 | seconds, L1D misses/accesses |
 | sequential-vs-random | access order and index arithmetic | 1M words × 4 | seconds, L1D misses, DRAM reads |
 | matmul | `ijk` vs `ikj` loop order | 96 × 96 | seconds, L1D misses |
-| dram-patterns | jump size 1, 1025, 8191 words | 16K words × 5, `--no-cache` | seconds, read bursts, row hit rate |
-| dram-patterns-cache | same jump sizes | 16K words × 5, `--cache` | read bursts, L1D misses, seconds |
+| dram-patterns | jump size 1, 1025, 32769 words | 1M words (4 MB) × 1, `--cache` | seconds, read bursts, row hit rate |
+| dram-patterns-no-cache | same jump sizes | 1M words (4 MB) × 1, `--no-cache` | read bursts, row hit rate, seconds |
 
 The two access programs perform the same sums. The random order in `random/main.c` is repeatable: it visits
 every element exactly once per round but performs extra index arithmetic.
@@ -36,13 +36,16 @@ Compare instruction counts alongside misses and time. The `ijk` and
 `ikj` matrix loops yield the same checksum; accumulator placement differs.
 Both use the same binary architecture, simulated CPU, clock, and DRAM.
 Cache experiment results are model observations, not measurements of your
-physical CPU. The `dram-patterns` sweep bypasses caches to expose the memory
-controller. A stride does **not** promise a row hit or row conflict:
-page mapping, channel/bank decoding, open-page policy, request queues, and
-initialization affect the outcome. Check measured `readRowHits`, `readBursts`
-and `readRowHitRate` before interpreting a bar chart as a row locality effect.
-With caches bypassed, these DRAM counters include instruction fetches, stack
-accesses, and initialization as well as the array loads.
+physical CPU. The `dram-patterns` sweep reads a 4 MB array, 16 times the L2,
+so cache misses reach the memory controller. A DRAM row holds 8 kB, and
+consecutive 8 kB pieces go to different banks (2 ranks × 8 banks), so a jump of
+32769 words (128 kB + 4 bytes) lands in the same bank but a different row on
+every step. A jump size alone still does **not** promise a row hit or conflict:
+address mapping, the open-adaptive page policy, request queues, and
+initialization all affect the outcome. Check measured `readRowHits`,
+`readBursts` and `readRowHitRate` before interpreting a bar chart as a row
+locality effect. The `dram-patterns-no-cache` sweep bypasses the caches: its
+DRAM counters are dominated by instruction fetches, which hides the data pattern.
 
 `scripts/plot_results.py <experiment>` plots the `stats.txt` files that
 `sweep-se.sh` saves under `results/<experiment>/`.
