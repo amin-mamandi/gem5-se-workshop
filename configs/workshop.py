@@ -37,7 +37,8 @@ parser.add_argument("--binary", type=Path, required=True)
 parser.add_argument("--arg", action="append", default=[])
 parser.add_argument("--l1d-size", default="32kB")
 parser.add_argument("--l1d-latency", type=int, default=1)
-parser.add_argument("--no-cache", action="store_true")
+# --cache (default) keeps the L1/L2 caches; --no-cache sends every access to DRAM.
+parser.add_argument("--cache", action=argparse.BooleanOptionalAction, default=True)
 args = parser.parse_args()
 if args.l1d_latency < 1:
     parser.error("--l1d-latency must be at least 1")
@@ -45,8 +46,8 @@ if not args.binary.is_file():
     parser.error(f"binary not found: {args.binary}")
 
 requires(isa_required=ISA.RISCV)
-cache = (NoCache() if args.no_cache else
-         TunableCache(args.l1d_size, args.l1d_latency))
+cache = (TunableCache(args.l1d_size, args.l1d_latency) if args.cache else
+         NoCache())
 board = SimpleBoard(
     clk_freq="2GHz",
     processor=SimpleProcessor(

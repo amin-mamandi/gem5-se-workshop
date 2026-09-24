@@ -1,13 +1,12 @@
 # gem5 SE experiments
 
-Local build: **`./gem5/build/RISCV/gem5.opt`**, RISC-V, classic cache hierarchy,
+Local build: **`./gem5/build/RISCV/gem5.fast`**, RISC-V, classic cache hierarchy,
 TimingSimpleCPU, SimpleBoard, DDR3_1600_8x8 single channel, 2 GHz.
 The config is `configs/workshop.py`; it uses `BinaryResource` and
 `set_se_binary_workload`. `./build-gem5.sh` clones the latest upstream source on first
 use.
 Build native C programs with `make`; `make gem5` builds static RISC-V SE binaries.
-The default cross compiler is `riscv64-linux-gnu-gcc`;
-override it with `GEM5_CC` if needed. Confirm the ISA with
+The cross compiler is `riscv64-linux-gnu-gcc`. Confirm the ISA with
 `file examples/simple/main-gem5`.
 
 ```bash
@@ -28,9 +27,10 @@ slide preview steps are in the [workshop README](../README.md).
 | cache-size | L1D size 16, 32, 64, 128 kB | sequential 16K words × 40 | seconds, L1D misses/accesses |
 | sequential-vs-random | access order and index arithmetic | 1M words × 4 | seconds, L1D misses, DRAM reads |
 | matmul | `ijk` vs `ikj` loop order | 96 × 96 | seconds, L1D misses |
-| dram-patterns | word stride 1, 1025, 8191 | 16K words × 5, no caches | seconds, read bursts, row hit rate |
+| dram-patterns | jump size 1, 1025, 8191 words | 16K words × 5, `--no-cache` | seconds, read bursts, row hit rate |
+| dram-patterns-cache | same jump sizes | 16K words × 5, `--cache` | read bursts, L1D misses, seconds |
 
-The two access programs perform the same sums. The deterministic invertible permutation in `random/main.c` visits
+The two access programs perform the same sums. The random order in `random/main.c` is repeatable: it visits
 every element exactly once per round but performs extra index arithmetic.
 Compare instruction counts alongside misses and time. The `ijk` and
 `ikj` matrix loops yield the same checksum; accumulator placement differs.

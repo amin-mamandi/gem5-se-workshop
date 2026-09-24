@@ -13,7 +13,8 @@ X_TITLES = {
     'cache-size': 'L1 data size',
     'sequential-vs-random': 'Access order',
     'matmul': 'Loop order',
-    'dram-patterns': 'Stride (words)',
+    'dram-patterns': 'Jump size (words), caches off',
+    'dram-patterns-cache': 'Jump size (words), caches on',
 }
 
 

@@ -1,10 +1,32 @@
-# sequential-vs-random
+# Experiment 3: sequential vs random order
 
-From the repository root:
+**Change:** the program, `sequential` or `random`.
+**Keep:** 1,048,576 words (4 MB), 4 passes, caches on.
+**Try also:** a third argument, `--arg write`, stores instead of reading (use a new label).
+
+## Run
 
 ```bash
-./sweep-se.sh
-python3 scripts/plot_results.py sequential-vs-random
+for program in sequential random; do
+  ./run-se.sh $program sequential-vs-random/$program \
+    --arg 1048576 --arg 4
+done
 ```
 
-See [experiment methods](../README.md) for variables, measurements, interpretation, and DRAM mapping caveats. Outputs go to `results/sequential-vs-random/`, which is excluded from Git; generated plots go to `assets/plots/`.
+## Find the counters
+
+```bash
+cd results/sequential-vs-random
+grep "simInsts" */stats.txt
+grep "l1dcaches.demandMissRate::total" */stats.txt
+grep "dram.readBursts" */stats.txt
+grep "simSeconds" */stats.txt
+cd ../..
+```
+
+## Compare
+
+- Random runs more instructions (index arithmetic). How much more?
+- How much of the time gap is L1 misses and DRAM reads?
+
+Plot: `python3 scripts/plot_results.py sequential-vs-random` (needs matplotlib). See [experiment methods](../README.md) for caveats.

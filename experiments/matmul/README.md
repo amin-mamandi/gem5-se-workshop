@@ -1,10 +1,30 @@
-# matmul
+# Experiment 4: matrix loop order
 
-From the repository root:
+**Change:** loop order, `ijk` or `ikj`.
+**Keep:** 96 × 96 matrices, caches on.
+
+## Run
 
 ```bash
-./sweep-se.sh
-python3 scripts/plot_results.py matmul
+for order in ijk ikj; do
+  ./run-se.sh matmul matmul/$order --arg 96 --arg $order
+done
 ```
 
-See [experiment methods](../README.md) for variables, measurements, interpretation, and DRAM mapping caveats. Outputs go to `results/matmul/`, which is excluded from Git; generated plots go to `assets/plots/`.
+## Find the counters
+
+```bash
+cd results/matmul
+grep "checksum" */run.log
+grep "l1dcaches.demandMissRate::total" */stats.txt
+grep "simInsts" */stats.txt
+grep "simSeconds" */stats.txt
+cd ../..
+```
+
+## Compare
+
+- The checksum must match: same answer.
+- Which order has fewer misses? Which runs fewer instructions? Which finishes first, and why?
+
+Plot: `python3 scripts/plot_results.py matmul` (needs matplotlib). See [experiment methods](../README.md) for caveats.
